@@ -1,2 +1,2 @@
-# TLM-Zenith
-Let the maid use the Zenith Sword.
+# True Copper
+Add some features and compatibilities to the mod [TheZenithSword](https://github.com/OceanScenery/MinecraftZenithMod).
