@@ -1,4 +1,6 @@
 {
+  "item.true_copper.true_copper_shortsword": "真铜短剑",
+  "item.true_copper.true_wooden_sword": "真木剑",
   "subtitles.true_copper.zenith_slash": "天顶剑挥砍",
   "task.true_copper.zenith_attack": "天顶剑",
   "task.true_copper.zenith_attack.desc": "挥舞天顶剑：直线上的敌人先被斩击，随后剑气追击。",

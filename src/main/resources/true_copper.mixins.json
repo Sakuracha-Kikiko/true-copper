@@ -5,8 +5,12 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "DamageHandlerMixin",
+    "InHandItemUtilMixin",
     "LivingEntityAccessor",
     "ZenithItemMixin"
+  ],
+  "client": [
+    "client.ZenithProjectileRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

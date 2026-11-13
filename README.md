@@ -68,6 +68,17 @@ player would.
 The instant damage, the blade damage and the damage filter of the Zenith Sword itself are untouched:
 a maid simply calls the same attack entry point a player does.
 
+### Cosmetic variants
+
+Two swords reuse the Zenith Sword's combat code without copying it:
+
+- **True Copper Shortsword** (`true_copper:true_copper_shortsword`)
+- **True Wooden Sword** (`true_copper:true_wooden_sword`)
+
+They deal the same damage, have the same reach, cooldown and enchantment behaviour, and take part
+in deferred damage exactly like the Zenith Sword. Only the item texture, the flying blade model and
+the trail colour differ. Both are in the Combat creative tab; there are no recipes yet.
+
 ## Configuration
 
 Everything below can be edited in game: **Mods → True Copper → Config**. That screen is NeoForge's own
@@ -116,7 +127,7 @@ config UI, no extra config library is required. The TOML file is still there for
 
 - Minecraft 1.21.1
 - NeoForge 21.1.250 or newer
-- The Zenith Sword 2.0.0 or newer
+- The Zenith Sword 2.0.1 or newer
 
 Touhou Little Maid 1.5.3 or newer is optional: without it the maid work mode is simply not registered,
 everything else keeps working.
