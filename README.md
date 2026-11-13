@@ -31,13 +31,25 @@ Behaviour:
 Only living entities are affected; item entities, experience orbs and similar non-living targets keep
 the vanilla instant behaviour.
 
-### Swing sound
+### Swing and hit sounds
 
-Every Zenith Sword swing plays `true_copper:zenith_slash`. Other players hear it coming from the
-attacker's position; the attacker's own client plays a direct, non-positional copy, because a world
-sound at zero distance still goes through 3D processing and can feel detached from the swing. The
-shipped `zenith_slash.ogg` is mono on purpose: Minecraft only spatialises mono sounds, so keep it
-mono if you replace the file. It can be turned off or rebalanced in the config.
+The Zenith Sword has no sound of its own. True Copper adds a swing sound (`true_copper:zenith_slash`)
+and makes both the swing and the target's hurt sound audible across the sword's real reach.
+
+- **Swing**: every swing plays `true_copper:zenith_slash` at the attacker's position. The attacker's
+  own client plays a direct, non-positional copy, because a world sound at zero distance still goes
+  through 3D processing and can feel detached from the swing. Everyone else hears it from the
+  attacker's position, fading out to `swingSoundRange` (default 200 blocks).
+- **Hit**: when a Zenith hit lands (instant pass or flying blade), the target's own hurt or death
+  sound is replayed to players within `hitSoundRange` (default 200 blocks), fading with distance.
+  Players inside the vanilla 16 block radius already hear the normal sound and are skipped, so it
+  never doubles up. The volume is the target's own sound volume times `hitSoundVolume`.
+- Vanilla sound packets stop at the sound event's range (16 blocks for most sounds), so the extended
+  sounds travel in a small custom packet and are faded on the client instead. Turning the feature
+  off restores the completely vanilla behaviour.
+
+The shipped `zenith_slash.ogg` is mono on purpose: Minecraft only spatialises mono sounds, so keep
+it mono if you replace the file.
 
 ### Maid work mode
 
@@ -76,6 +88,16 @@ config UI, no extra config library is required. The TOML file is still there for
     # Play a slash sound whenever a Zenith Sword swing starts.
     playZenithSlashSound = true
     zenithSlashVolume = 1.0
+    # How far other players hear the swing (the attacker always hears it at full volume).
+    swingSoundRange = 200
+    # Replay a hit target's hurt/death sound to nearby players, beyond the vanilla 16 blocks.
+    playZenithHitSound = true
+    # How far that hurt/death sound travels.
+    hitSoundRange = 200
+    # Volume multiplier on top of the target's own sound volume.
+    hitSoundVolume = 0.8
+    # Players closer than this keep only the vanilla sound (0 = also send to close players).
+    hitSoundMinDistance = 16
 
 [maid]
     # Register the "Zenith Sword" maid work mode.

@@ -5,7 +5,8 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 /**
- * Networking: one clientbound packet, only used for the attacker's own slash sound.
+ * Networking: one clientbound packet for the attacker's own slash sound, and one for sounds
+ * that need a range longer than the vanilla sound event allows.
  */
 public final class TrueCopperNetwork {
 
@@ -22,5 +23,7 @@ public final class TrueCopperNetwork {
         PayloadRegistrar registrar = event.registrar(PROTOCOL_VERSION);
         registrar.playToClient(SlashSoundPayload.TYPE, SlashSoundPayload.STREAM_CODEC,
                 SlashSoundPayload::handle);
+        registrar.playToClient(ExtendedSoundPayload.TYPE, ExtendedSoundPayload.STREAM_CODEC,
+                ExtendedSoundPayload::handle);
     }
 }

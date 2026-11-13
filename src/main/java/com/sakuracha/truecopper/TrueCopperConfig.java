@@ -18,6 +18,11 @@ public final class TrueCopperConfig {
     private static final ModConfigSpec.IntValue PENDING_TIMEOUT_TICKS;
     private static final ModConfigSpec.BooleanValue PLAY_ZENITH_SOUND;
     private static final ModConfigSpec.DoubleValue ZENITH_SOUND_VOLUME;
+    private static final ModConfigSpec.IntValue ZENITH_SWING_SOUND_RANGE;
+    private static final ModConfigSpec.BooleanValue PLAY_ZENITH_HIT_SOUND;
+    private static final ModConfigSpec.IntValue ZENITH_HIT_SOUND_RANGE;
+    private static final ModConfigSpec.DoubleValue ZENITH_HIT_SOUND_VOLUME;
+    private static final ModConfigSpec.IntValue ZENITH_HIT_SOUND_MIN_DISTANCE;
     private static final ModConfigSpec.BooleanValue ENABLE_MAID_TASK;
     private static final ModConfigSpec.IntValue MAID_SEARCH_RANGE;
     private static final ModConfigSpec.IntValue MAID_COOLDOWN_TICKS;
@@ -29,6 +34,11 @@ public final class TrueCopperConfig {
     private static final int DEFAULT_TIMEOUT = 25;
     private static final boolean DEFAULT_PLAY_SOUND = true;
     private static final double DEFAULT_SOUND_VOLUME = 1.0D;
+    private static final int DEFAULT_SWING_SOUND_RANGE = 200;
+    private static final boolean DEFAULT_PLAY_HIT_SOUND = true;
+    private static final int DEFAULT_HIT_SOUND_RANGE = 200;
+    private static final double DEFAULT_HIT_SOUND_VOLUME = 0.8D;
+    private static final int DEFAULT_HIT_SOUND_MIN_DISTANCE = 16;
     private static final boolean DEFAULT_ENABLE_MAID_TASK = true;
     private static final int DEFAULT_MAID_SEARCH_RANGE = 32;
     private static final int DEFAULT_MAID_COOLDOWN = 20;
@@ -73,9 +83,40 @@ public final class TrueCopperConfig {
 
         ZENITH_SOUND_VOLUME = builder
                 .translation(LANG + "sounds.zenithSlashVolume")
-                .comment("Volume of the swing sound. Vanilla sounds get louder up to 1.0 and are audible",
-                        "from roughly 16 blocks per unit of volume; higher values carry further.")
+                .comment("Volume of the swing sound. Range is controlled separately by swingSoundRange;",
+                        "this value only changes how loud the swing is.")
                 .defineInRange("zenithSlashVolume", DEFAULT_SOUND_VOLUME, 0.0D, 4.0D);
+
+        ZENITH_SWING_SOUND_RANGE = builder
+                .translation(LANG + "sounds.swingSoundRange")
+                .comment("How far (in blocks) other players can hear a Zenith Sword swing.",
+                        "The attacker always hears the swing at full volume; everyone else hears it fade with distance.",
+                        "The sword itself reaches 200 blocks, so the default matches that.")
+                .defineInRange("swingSoundRange", DEFAULT_SWING_SOUND_RANGE, 16, 512);
+
+        PLAY_ZENITH_HIT_SOUND = builder
+                .translation(LANG + "sounds.playZenithHitSound")
+                .comment("Extend the hurt/death sound of targets hit by a Zenith Sword to nearby players.",
+                        "Players inside the vanilla 16 block radius already hear the normal hurt sound and are skipped.",
+                        "This is what gives a hit at 100+ blocks its impact.")
+                .define("playZenithHitSound", DEFAULT_PLAY_HIT_SOUND);
+
+        ZENITH_HIT_SOUND_RANGE = builder
+                .translation(LANG + "sounds.hitSoundRange")
+                .comment("How far (in blocks) the extended hurt/death sound of a Zenith hit travels.")
+                .defineInRange("hitSoundRange", DEFAULT_HIT_SOUND_RANGE, 16, 512);
+
+        ZENITH_HIT_SOUND_VOLUME = builder
+                .translation(LANG + "sounds.hitSoundVolume")
+                .comment("Volume multiplier for the extended hurt/death sound.",
+                        "This is added on top of the target's own sound volume (usually 1.0).")
+                .defineInRange("hitSoundVolume", DEFAULT_HIT_SOUND_VOLUME, 0.0D, 4.0D);
+
+        ZENITH_HIT_SOUND_MIN_DISTANCE = builder
+                .translation(LANG + "sounds.hitSoundMinDistance")
+                .comment("Players closer than this (in blocks) to the target keep the vanilla hurt sound only.",
+                        "Set to 0 to also send the extended sound to close players (it will sound doubled).")
+                .defineInRange("hitSoundMinDistance", DEFAULT_HIT_SOUND_MIN_DISTANCE, 0, 128);
 
         builder.pop();
 
@@ -139,6 +180,26 @@ public final class TrueCopperConfig {
 
     public static double zenithSoundVolume() {
         return SPEC.isLoaded() ? ZENITH_SOUND_VOLUME.get() : DEFAULT_SOUND_VOLUME;
+    }
+
+    public static float zenithSwingSoundRange() {
+        return SPEC.isLoaded() ? ZENITH_SWING_SOUND_RANGE.get() : DEFAULT_SWING_SOUND_RANGE;
+    }
+
+    public static boolean playZenithHitSound() {
+        return !SPEC.isLoaded() || PLAY_ZENITH_HIT_SOUND.get();
+    }
+
+    public static float zenithHitSoundRange() {
+        return SPEC.isLoaded() ? ZENITH_HIT_SOUND_RANGE.get() : DEFAULT_HIT_SOUND_RANGE;
+    }
+
+    public static double zenithHitSoundVolume() {
+        return SPEC.isLoaded() ? ZENITH_HIT_SOUND_VOLUME.get() : DEFAULT_HIT_SOUND_VOLUME;
+    }
+
+    public static double zenithHitSoundMinDistance() {
+        return SPEC.isLoaded() ? ZENITH_HIT_SOUND_MIN_DISTANCE.get() : DEFAULT_HIT_SOUND_MIN_DISTANCE;
     }
 
     public static boolean enableMaidTask() {

@@ -4,6 +4,8 @@ import com.oceanscenery.zenith.mod_class.item.ZenithItem;
 import com.sakuracha.truecopper.TrueCopperConfig;
 import com.sakuracha.truecopper.network.SlashSoundPayload;
 import com.sakuracha.truecopper.sound.ModSounds;
+import com.sakuracha.truecopper.sound.SoundBroadcast;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -11,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,7 +23,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * The Zenith Sword is silent in its own mod. This injects a swing sound at the start of
  * {@code ZenithItem#attack}, but only when the swing really happens: the vanilla cooldown
- * check is repeated first so blocked clicks stay silent.
+ * check is repeated first so blocked clicks stay silent. The sound is broadcast by hand so it
+ * can be heard across the sword's own 200 block reach instead of the vanilla 16 blocks.
  */
 @Mixin(value = ZenithItem.class, remap = false)
 public abstract class ZenithItemMixin {
@@ -38,21 +42,19 @@ public abstract class ZenithItemMixin {
             return;
         }
         float volume = (float) TrueCopperConfig.zenithSoundVolume();
-        if (volume <= 0.0F) {
+        if (volume <= 0.0F || !(level instanceof ServerLevel serverLevel)) {
             return;
         }
         SoundEvent sound = ModSounds.ZENITH_SLASH.get();
-        double x = attacker.getX();
-        double y = attacker.getEyeY();
-        double z = attacker.getZ();
-        if (attacker instanceof ServerPlayer player) {
-            // Everyone else hears the swing coming from the player. The attacker's own client
-            // gets a direct copy through the payload instead: a world sound at zero distance is
-            // still processed positionally and does not feel attached to the swing.
-            level.playSound(player, x, y, z, sound, SoundSource.PLAYERS, volume, 1.0F);
-            PacketDistributor.sendToPlayer(player, new SlashSoundPayload(volume));
-        } else {
-            level.playSound(null, x, y, z, sound, SoundSource.PLAYERS, volume, 1.0F);
+        ServerPlayer attackerPlayer = attacker instanceof ServerPlayer player ? player : null;
+        SoundBroadcast.send(serverLevel,
+                new Vec3(attacker.getX(), attacker.getEyeY(), attacker.getZ()),
+                sound, volume, 1.0F, TrueCopperConfig.zenithSwingSoundRange(),
+                SoundSource.PLAYERS, attackerPlayer, 0.0D);
+        if (attackerPlayer != null) {
+            // The attacker hears their own swing directly instead of positionally, so it feels
+            // attached to the hand. Everyone else hears the broadcast version.
+            PacketDistributor.sendToPlayer(attackerPlayer, new SlashSoundPayload(volume));
         }
     }
 }
