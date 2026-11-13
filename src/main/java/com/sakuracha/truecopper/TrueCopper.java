@@ -1,6 +1,7 @@
 package com.sakuracha.truecopper;
 
 import com.sakuracha.truecopper.client.ClientSetup;
+import com.sakuracha.truecopper.network.TrueCopperNetwork;
 import com.sakuracha.truecopper.sound.ModSounds;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -19,6 +20,7 @@ public final class TrueCopper {
 
     public TrueCopper(ModContainer container, IEventBus modEventBus) {
         ModSounds.SOUNDS.register(modEventBus);
+        TrueCopperNetwork.register(modEventBus);
         container.registerConfig(ModConfig.Type.COMMON, TrueCopperConfig.SPEC);
         if (FMLEnvironment.dist == Dist.CLIENT) {
             ClientSetup.registerConfigScreen(container);

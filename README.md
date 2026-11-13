@@ -33,10 +33,11 @@ the vanilla instant behaviour.
 
 ### Swing sound
 
-Every Zenith Sword swing plays `true_copper:zenith_slash` at the attacker's position, so other
-players hear it coming from the right direction. The shipped `zenith_slash.ogg` is mono on purpose:
-Minecraft only spatialises mono sounds, so keep it mono if you replace the file. It can be turned off
-or rebalanced in the config.
+Every Zenith Sword swing plays `true_copper:zenith_slash`. Other players hear it coming from the
+attacker's position; the attacker's own client plays a direct, non-positional copy, because a world
+sound at zero distance still goes through 3D processing and can feel detached from the swing. The
+shipped `zenith_slash.ogg` is mono on purpose: Minecraft only spatialises mono sounds, so keep it
+mono if you replace the file. It can be turned off or rebalanced in the config.
 
 ### Maid work mode
 
