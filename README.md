@@ -31,6 +31,26 @@ Behaviour:
 Only living entities are affected; item entities, experience orbs and similar non-living targets keep
 the vanilla instant behaviour.
 
+### Swing sound
+
+Every Zenith Sword swing plays `true_copper:zenith_slash`. It is client-side only and can be turned
+off or rebalanced in the config.
+
+### Maid work mode
+
+Adds a **Zenith Sword** work mode for Touhou Little Maid: a maid holding a Zenith Sword fights like a
+player would.
+
+- She faces the target before every swing, because the sword builds its ray from the attacker's
+  rotation.
+- She uses her own cooldown instead of the vanilla attack speed, which for a maid is meaningless with
+  this sword.
+- While swinging she receives the same extra damage a player gets in Zenith mode, so the numbers match.
+- Deferred damage applies to her hits too, so the blades still arrive before the health bar moves.
+
+The instant damage, the blade damage and the damage filter of the Zenith Sword itself are untouched:
+a maid simply calls the same attack entry point a player does.
+
 ## Configuration
 
 `config/true_copper-common.toml`:
@@ -43,6 +63,21 @@ the vanilla instant behaviour.
     sustainedWindowTicks = 10
     # How long a stored hit waits for its blade before it is applied anyway.
     pendingTimeoutTicks = 25
+
+[sounds]
+    # Play a slash sound whenever a Zenith Sword swing starts.
+    playZenithSlashSound = true
+    zenithSlashVolume = 1.0
+
+[maid]
+    # Register the "Zenith Sword" maid work mode.
+    enableZenithMaidTask = true
+    # How far a maid looks for targets while using the sword.
+    zenithSearchRange = 32
+    # Ticks between two swings; the final cooldown is this value divided by the maid's attack speed.
+    zenithAttackCooldownTicks = 20
+    # Extra damage while swinging, as a multiple of the sword's own damage value (1.0 = like a player).
+    zenithDamageBonus = 1.0
 ```
 
 ## Requirements
@@ -51,15 +86,18 @@ the vanilla instant behaviour.
 - NeoForge 21.1.250 or newer
 - The Zenith Sword 2.0.0 or newer
 
+Touhou Little Maid 1.5.3 or newer is optional: without it the maid work mode is simply not registered,
+everything else keeps working.
+
 ## Building
 
 ```
 ./gradlew build
 ```
 
-The Zenith Sword jar is not committed. Copy `the_zenith_sword-2.0.0-1.21.1.jar` into `libs/`
-before building (it is used as a `compileOnly` dependency and for the `runClient`/`runServer`
-development runs).
+Third-party jars are not committed. Drop the Zenith Sword jar (and, for the maid work mode, the
+Touhou Little Maid jar) into `libs/` before building: every jar there is picked up as a
+`compileOnly` dependency and for the `runClient`/`runServer` development runs.
 
 ## License
 
