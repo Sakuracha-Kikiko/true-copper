@@ -1,0 +1,11 @@
+{
+  "zenith_slash": {
+    "subtitle": "subtitles.true_copper.zenith_slash",
+    "sounds": [
+      {
+        "name": "true_copper:zenith_slash",
+        "stream": false
+      }
+    ]
+  }
+}

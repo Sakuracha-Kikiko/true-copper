@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "com.sakuracha.truecopper.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "DamageHandlerMixin",
+    "ZenithItemMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
