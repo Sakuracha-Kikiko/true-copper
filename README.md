@@ -55,6 +55,9 @@ a maid simply calls the same attack entry point a player does.
 
 ## Configuration
 
+Everything below can be edited in game: **Mods → True Copper → Config**. That screen is NeoForge's own
+config UI, no extra config library is required. The TOML file is still there for pack makers.
+
 `config/true_copper-common.toml`:
 
 ```toml

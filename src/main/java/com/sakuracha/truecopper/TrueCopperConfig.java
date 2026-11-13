@@ -10,6 +10,9 @@ public final class TrueCopperConfig {
 
     public static final ModConfigSpec SPEC;
 
+    /** Prefix of the in-game config screen translation keys. */
+    private static final String LANG = "true_copper.config.";
+
     private static final ModConfigSpec.BooleanValue DEFER_INSTANT_DAMAGE;
     private static final ModConfigSpec.IntValue SUSTAINED_WINDOW_TICKS;
     private static final ModConfigSpec.IntValue PENDING_TIMEOUT_TICKS;
@@ -34,19 +37,23 @@ public final class TrueCopperConfig {
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
-        builder.comment("Zenith Sword: hold back the instantaneous part of a swing until the flying blade reaches the target.")
+        builder.translation(LANG + "deferred_damage")
+                .comment("Zenith Sword: hold back the instantaneous part of a swing until the flying blade reaches the target.")
                 .push("deferred_damage");
 
         DEFER_INSTANT_DAMAGE = builder
+                .translation(LANG + "deferred_damage.deferInstantDamage")
                 .comment("Delay the instantaneous swing damage until a Zenith blade actually hits the target.",
                         "Targets that are already being hit by Zenith blades are damaged immediately (sustained damage).")
                 .define("deferInstantDamage", DEFAULT_DEFER);
 
         SUSTAINED_WINDOW_TICKS = builder
+                .translation(LANG + "deferred_damage.sustainedWindowTicks")
                 .comment("If the target was hit by any Zenith blade within this many ticks, the swing counts as sustained damage and is applied immediately.")
                 .defineInRange("sustainedWindowTicks", DEFAULT_WINDOW, 0, 100);
 
         PENDING_TIMEOUT_TICKS = builder
+                .translation(LANG + "deferred_damage.pendingTimeoutTicks")
                 .comment("Upper bound (in ticks) for how long a deferred hit waits for the blade.",
                         "A blade needs 21 ticks to travel its full range, so this should stay above that.",
                         "When the timeout expires the damage is applied anyway - it is never thrown away.")
@@ -54,44 +61,54 @@ public final class TrueCopperConfig {
 
         builder.pop();
 
-        builder.comment("Zenith Sword: the sword ships without any sound, this adds a swing sound.")
+        builder.translation(LANG + "sounds")
+                .comment("Zenith Sword: the sword ships without any sound, this adds a swing sound.")
                 .push("sounds");
 
         PLAY_ZENITH_SOUND = builder
+                .translation(LANG + "sounds.playZenithSlashSound")
                 .comment("Play a swing sound whenever a Zenith Sword attack actually goes off.",
                         "Also applies to maids once they can use the sword.")
                 .define("playZenithSlashSound", DEFAULT_PLAY_SOUND);
 
         ZENITH_SOUND_VOLUME = builder
+                .translation(LANG + "sounds.zenithSlashVolume")
                 .comment("Volume of the swing sound. Vanilla sounds get louder up to 1.0 and are audible",
                         "from roughly 16 blocks per unit of volume; higher values carry further.")
                 .defineInRange("zenithSlashVolume", DEFAULT_SOUND_VOLUME, 0.0D, 4.0D);
 
         builder.pop();
 
-        builder.comment("Maid support: a work mode that lets maids swing the Zenith Sword like a player.")
+        builder.translation(LANG + "maid")
+                .comment("Maid support: a work mode that lets maids swing the Zenith Sword like a player.")
                 .push("maid");
 
         ENABLE_MAID_TASK = builder
+                .translation(LANG + "maid.enableZenithMaidTask")
                 .comment("Register the Zenith Sword work mode for maids. Only takes effect when Touhou Little Maid",
                         "is installed; the work mode is simply absent otherwise.")
+                .gameRestart()
                 .define("enableZenithMaidTask", DEFAULT_ENABLE_MAID_TASK);
 
         MAID_SEARCH_RANGE = builder
+                .translation(LANG + "maid.zenithSearchRange")
                 .comment("How far (in blocks) a maid searches for and keeps a target while using the Zenith Sword.")
                 .defineInRange("zenithSearchRange", DEFAULT_MAID_SEARCH_RANGE, 8, 128);
 
         MAID_COOLDOWN_TICKS = builder
+                .translation(LANG + "maid.zenithAttackCooldownTicks")
                 .comment("Ticks between two swings. The sword itself has a short internal cooldown, this is the",
                         "maid's own pacing. 20 ticks is one second.")
                 .defineInRange("zenithAttackCooldownTicks", DEFAULT_MAID_COOLDOWN, 1, 200);
 
         MAID_DAMAGE_BONUS = builder
+                .translation(LANG + "maid.zenithDamageBonus")
                 .comment("Extra attack damage while a maid swings, as a multiple of the sword's own damage value.",
                         "A player in Zenith mode gets one extra copy of it, so 1.0 matches a player; 0 disables it.")
                 .defineInRange("zenithDamageBonus", DEFAULT_MAID_DAMAGE_BONUS, 0.0D, 10.0D);
 
         MAID_PROTECT_ALLIES = builder
+                .translation(LANG + "maid.protectAllies")
                 .comment("Never let a maid's Zenith Sword damage players or other maids.",
                         "The sword swings hit everything on a long line, so without this a maid can hit its owner.",
                         "Implemented with the sword's own type blacklist on the maid, and also covers the flying blades.")
