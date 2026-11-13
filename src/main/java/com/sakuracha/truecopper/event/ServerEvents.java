@@ -28,7 +28,7 @@ public final class ServerEvents {
             Class.forName("com.oceanscenery.zenith.util.DamageHandler", false, TrueCopper.class.getClassLoader());
             LOGGER.info("Zenith Sword damage handler hooked");
         } catch (Throwable throwable) {
-            LOGGER.error("Could not hook The Zenith Sword - is this version (2.0.0) still compatible?", throwable);
+            LOGGER.error("Could not hook The Zenith Sword - is this version still compatible?", throwable);
         }
     }
 

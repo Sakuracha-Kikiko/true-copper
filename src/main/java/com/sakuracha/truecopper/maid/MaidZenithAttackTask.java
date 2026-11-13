@@ -31,6 +31,12 @@ public class MaidZenithAttackTask extends Behavior<EntityMaid> {
     }
 
     @Override
+    protected boolean canStillUse(ServerLevel level, EntityMaid maid, long gameTime) {
+        LivingEntity target = maid.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null);
+        return target != null && this.task.hasZenith(maid) && this.task.canSee(maid, target);
+    }
+
+    @Override
     protected void tick(ServerLevel level, EntityMaid maid, long gameTime) {
         LivingEntity target = maid.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null);
         if (target == null) {

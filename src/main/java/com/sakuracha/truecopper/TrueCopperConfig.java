@@ -19,6 +19,7 @@ public final class TrueCopperConfig {
     private static final ModConfigSpec.IntValue MAID_SEARCH_RANGE;
     private static final ModConfigSpec.IntValue MAID_COOLDOWN_TICKS;
     private static final ModConfigSpec.DoubleValue MAID_DAMAGE_BONUS;
+    private static final ModConfigSpec.BooleanValue MAID_PROTECT_ALLIES;
 
     private static final boolean DEFAULT_DEFER = true;
     private static final int DEFAULT_WINDOW = 10;
@@ -29,6 +30,7 @@ public final class TrueCopperConfig {
     private static final int DEFAULT_MAID_SEARCH_RANGE = 32;
     private static final int DEFAULT_MAID_COOLDOWN = 20;
     private static final double DEFAULT_MAID_DAMAGE_BONUS = 1.0D;
+    private static final boolean DEFAULT_MAID_PROTECT_ALLIES = true;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -89,6 +91,12 @@ public final class TrueCopperConfig {
                         "A player in Zenith mode gets one extra copy of it, so 1.0 matches a player; 0 disables it.")
                 .defineInRange("zenithDamageBonus", DEFAULT_MAID_DAMAGE_BONUS, 0.0D, 10.0D);
 
+        MAID_PROTECT_ALLIES = builder
+                .comment("Never let a maid's Zenith Sword damage players or other maids.",
+                        "The sword swings hit everything on a long line, so without this a maid can hit its owner.",
+                        "Implemented with the sword's own type blacklist on the maid, and also covers the flying blades.")
+                .define("protectAllies", DEFAULT_MAID_PROTECT_ALLIES);
+
         builder.pop();
         SPEC = builder.build();
     }
@@ -130,5 +138,9 @@ public final class TrueCopperConfig {
 
     public static double maidDamageBonus() {
         return SPEC.isLoaded() ? MAID_DAMAGE_BONUS.get() : DEFAULT_MAID_DAMAGE_BONUS;
+    }
+
+    public static boolean maidProtectAllies() {
+        return !SPEC.isLoaded() || MAID_PROTECT_ALLIES.get();
     }
 }

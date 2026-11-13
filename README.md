@@ -47,6 +47,8 @@ player would.
   this sword.
 - While swinging she receives the same extra damage a player gets in Zenith mode, so the numbers match.
 - Deferred damage applies to her hits too, so the blades still arrive before the health bar moves.
+- Her swings never hurt players or other maids: the sword hits everything on a long line, so without this a
+  maid could cut her own owner in half while aiming at a zombie.
 
 The instant damage, the blade damage and the damage filter of the Zenith Sword itself are untouched:
 a maid simply calls the same attack entry point a player does.
@@ -74,10 +76,12 @@ a maid simply calls the same attack entry point a player does.
     enableZenithMaidTask = true
     # How far a maid looks for targets while using the sword.
     zenithSearchRange = 32
-    # Ticks between two swings; the final cooldown is this value divided by the maid's attack speed.
+    # Fixed number of ticks between two swings (not scaled by attack speed, which is meaningless here).
     zenithAttackCooldownTicks = 20
     # Extra damage while swinging, as a multiple of the sword's own damage value (1.0 = like a player).
     zenithDamageBonus = 1.0
+    # Keep players and other maids out of the maid's damage line (and out of her flying blades).
+    protectAllies = true
 ```
 
 ## Requirements
