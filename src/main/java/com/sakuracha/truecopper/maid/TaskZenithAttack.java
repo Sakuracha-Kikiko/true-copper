@@ -8,7 +8,6 @@ import com.github.tartaricacid.touhoulittlemaid.util.SoundUtil;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import com.oceanscenery.zenith.mod_class.item.ZenithItem;
-import com.oceanscenery.zenith.registry.ZenithAttachments;
 import com.oceanscenery.zenith.registry.ZenithItems;
 import com.oceanscenery.zenith.util.AttachmentUtil;
 import com.oceanscenery.zenith.util.ConfigUtil;
@@ -31,7 +30,6 @@ import net.minecraft.world.phys.AABB;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Predicate;
 
 /**
@@ -149,20 +147,13 @@ public class TaskZenithAttack implements IRangedAttackTask {
      * have the sword's own blacklist UI; a maid cannot use it, so the work mode adds players and maids to the
      * maid's type blacklist instead. The entry is kept on the maid (not just for the current swing) because the
      * flying blades resolve their damage a second later and use the same blacklist.
+     * <p>
+     * Each direction is managed separately, and allowing one also removes an entry left behind by an older
+     * version or by a previous config value.
      */
     private static void keepAlliesSafe(EntityMaid maid) {
-        if (!TrueCopperConfig.maidProtectAllies()) {
-            AttachmentUtil.setTypeBlacklist(maid, PLAYER_TYPE, false);
-            AttachmentUtil.setTypeBlacklist(maid, MAID_TYPE, false);
-            return;
-        }
-        Set<String> marks = maid.getData(ZenithAttachments.ZENITH_ID_MARK).ids();
-        if (!marks.contains(PLAYER_TYPE)) {
-            AttachmentUtil.setTypeBlacklist(maid, PLAYER_TYPE, true);
-        }
-        if (!marks.contains(MAID_TYPE)) {
-            AttachmentUtil.setTypeBlacklist(maid, MAID_TYPE, true);
-        }
+        AttachmentUtil.setTypeBlacklist(maid, PLAYER_TYPE, !TrueCopperConfig.allowMaidDamagePlayer());
+        AttachmentUtil.setTypeBlacklist(maid, MAID_TYPE, !TrueCopperConfig.allowMaidDamageMaid());
     }
 
     @Override

@@ -2,9 +2,11 @@ package com.sakuracha.truecopper.mixin;
 
 import com.oceanscenery.zenith.mod_class.ZenithDamageSource;
 import com.oceanscenery.zenith.mod_class.entity.ZenithProjectile;
+import com.oceanscenery.zenith.mod_class.item.ZenithItem;
 import com.oceanscenery.zenith.util.DamageHandler;
 import com.sakuracha.truecopper.TrueCopperConfig;
 import com.sakuracha.truecopper.damage.DeferredDamage;
+import com.sakuracha.truecopper.damage.FriendlyFire;
 import com.sakuracha.truecopper.sound.SoundBroadcast;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -46,15 +48,25 @@ public class DamageHandlerMixin {
                                                       float scale, float damage,
                                                       DamageHandler.AttackFilter filter,
                                                       CallbackInfoReturnable<Boolean> callback) {
+        if (weapon != null && weapon.getItem() instanceof ZenithItem
+                && FriendlyFire.blocks(attacker, victim)) {
+            callback.setReturnValue(false);
+            return;
+        }
         if (DeferredDamage.shouldDefer(attacker, victim, weapon, scale, damage)) {
             callback.setReturnValue(false);
         }
     }
 
-    @Inject(method = APPLY_DAMAGE, at = @At("HEAD"), remap = false)
+    @Inject(method = APPLY_DAMAGE, at = @At("HEAD"), cancellable = true, remap = false)
     private static void truecopper$onBladeHit(ZenithProjectile projectile, Entity victim, ItemStack weapon,
                                               float scale, DamageHandler.AttackFilter filter,
                                               CallbackInfoReturnable<Boolean> callback) {
+        if (weapon != null && weapon.getItem() instanceof ZenithItem
+                && FriendlyFire.blocks(projectile.getOwner(), victim)) {
+            callback.setReturnValue(false);
+            return;
+        }
         DeferredDamage.onBladeHit(victim);
     }
 

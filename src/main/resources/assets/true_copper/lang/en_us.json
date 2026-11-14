@@ -9,6 +9,11 @@
   "true_copper.configuration.section.true.copper.common.toml.title": "True Copper",
   "true_copper.config.deferred_damage": "Deferred Damage",
   "true_copper.config.sounds": "Sounds",
+  "true_copper.config.friendly_fire": "Friendly Fire",
+  "true_copper.config.friendly_fire.allowMaidDamagePlayer": "Allow Maid → Player",
+  "true_copper.config.friendly_fire.allowMaidDamageMaid": "Allow Maid → Maid",
+  "true_copper.config.friendly_fire.allowPlayerDamageMaid": "Allow Player → Maid",
+  "true_copper.config.friendly_fire.allowPlayerDamagePlayer": "Allow Player → Player",
   "true_copper.config.maid": "Maid Work Mode",
   "true_copper.config.deferred_damage.deferInstantDamage": "Defer Instant Damage",
   "true_copper.config.deferred_damage.sustainedWindowTicks": "Sustained Window (ticks)",
@@ -24,8 +29,8 @@
   "true_copper.config.maid.zenithSearchRange": "Search Range",
   "true_copper.config.maid.zenithAttackCooldownTicks": "Swing Cooldown (ticks)",
   "true_copper.config.maid.zenithDamageBonus": "Damage Bonus",
-  "true_copper.config.maid.protectAllies": "Protect Allies",
   "true_copper.config.deferred_damage.button": "Edit",
   "true_copper.config.sounds.button": "Edit",
+  "true_copper.config.friendly_fire.button": "Edit",
   "true_copper.config.maid.button": "Edit"
 }

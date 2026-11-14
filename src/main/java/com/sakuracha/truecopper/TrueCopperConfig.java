@@ -27,7 +27,10 @@ public final class TrueCopperConfig {
     private static final ModConfigSpec.IntValue MAID_SEARCH_RANGE;
     private static final ModConfigSpec.IntValue MAID_COOLDOWN_TICKS;
     private static final ModConfigSpec.DoubleValue MAID_DAMAGE_BONUS;
-    private static final ModConfigSpec.BooleanValue MAID_PROTECT_ALLIES;
+    private static final ModConfigSpec.BooleanValue ALLOW_MAID_DAMAGE_PLAYER;
+    private static final ModConfigSpec.BooleanValue ALLOW_MAID_DAMAGE_MAID;
+    private static final ModConfigSpec.BooleanValue ALLOW_PLAYER_DAMAGE_MAID;
+    private static final ModConfigSpec.BooleanValue ALLOW_PLAYER_DAMAGE_PLAYER;
 
     private static final boolean DEFAULT_DEFER = true;
     private static final int DEFAULT_WINDOW = 10;
@@ -43,7 +46,10 @@ public final class TrueCopperConfig {
     private static final int DEFAULT_MAID_SEARCH_RANGE = 32;
     private static final int DEFAULT_MAID_COOLDOWN = 20;
     private static final double DEFAULT_MAID_DAMAGE_BONUS = 1.0D;
-    private static final boolean DEFAULT_MAID_PROTECT_ALLIES = true;
+    private static final boolean DEFAULT_ALLOW_MAID_DAMAGE_PLAYER = false;
+    private static final boolean DEFAULT_ALLOW_MAID_DAMAGE_MAID = false;
+    private static final boolean DEFAULT_ALLOW_PLAYER_DAMAGE_MAID = false;
+    private static final boolean DEFAULT_ALLOW_PLAYER_DAMAGE_PLAYER = false;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -120,6 +126,33 @@ public final class TrueCopperConfig {
 
         builder.pop();
 
+        builder.translation(LANG + "friendly_fire")
+                .comment("Which friendly-fire directions a Zenith Sword may damage.",
+                        "All four are off by default, so allies never hurt each other.")
+                .push("friendly_fire");
+
+        ALLOW_MAID_DAMAGE_PLAYER = builder
+                .translation(LANG + "friendly_fire.allowMaidDamagePlayer")
+                .comment("Let a maid's Zenith Sword damage players, including her owner.")
+                .define("allowMaidDamagePlayer", DEFAULT_ALLOW_MAID_DAMAGE_PLAYER);
+
+        ALLOW_MAID_DAMAGE_MAID = builder
+                .translation(LANG + "friendly_fire.allowMaidDamageMaid")
+                .comment("Let a maid's Zenith Sword damage other maids.")
+                .define("allowMaidDamageMaid", DEFAULT_ALLOW_MAID_DAMAGE_MAID);
+
+        ALLOW_PLAYER_DAMAGE_MAID = builder
+                .translation(LANG + "friendly_fire.allowPlayerDamageMaid")
+                .comment("Let a player's Zenith Sword damage maids.")
+                .define("allowPlayerDamageMaid", DEFAULT_ALLOW_PLAYER_DAMAGE_MAID);
+
+        ALLOW_PLAYER_DAMAGE_PLAYER = builder
+                .translation(LANG + "friendly_fire.allowPlayerDamagePlayer")
+                .comment("Let players damage each other with the Zenith Sword. Turn this on for PvP.")
+                .define("allowPlayerDamagePlayer", DEFAULT_ALLOW_PLAYER_DAMAGE_PLAYER);
+
+        builder.pop();
+
         builder.translation(LANG + "maid")
                 .comment("Maid support: a work mode that lets maids swing the Zenith Sword like a player.")
                 .push("maid");
@@ -147,13 +180,6 @@ public final class TrueCopperConfig {
                 .comment("Extra attack damage while a maid swings, as a multiple of the sword's own damage value.",
                         "A player in Zenith mode gets one extra copy of it, so 1.0 matches a player; 0 disables it.")
                 .defineInRange("zenithDamageBonus", DEFAULT_MAID_DAMAGE_BONUS, 0.0D, 10.0D);
-
-        MAID_PROTECT_ALLIES = builder
-                .translation(LANG + "maid.protectAllies")
-                .comment("Never let a maid's Zenith Sword damage players or other maids.",
-                        "The sword swings hit everything on a long line, so without this a maid can hit its owner.",
-                        "Implemented with the sword's own type blacklist on the maid, and also covers the flying blades.")
-                .define("protectAllies", DEFAULT_MAID_PROTECT_ALLIES);
 
         builder.pop();
         SPEC = builder.build();
@@ -218,7 +244,19 @@ public final class TrueCopperConfig {
         return SPEC.isLoaded() ? MAID_DAMAGE_BONUS.get() : DEFAULT_MAID_DAMAGE_BONUS;
     }
 
-    public static boolean maidProtectAllies() {
-        return !SPEC.isLoaded() || MAID_PROTECT_ALLIES.get();
+    public static boolean allowMaidDamagePlayer() {
+        return SPEC.isLoaded() && ALLOW_MAID_DAMAGE_PLAYER.get();
+    }
+
+    public static boolean allowMaidDamageMaid() {
+        return SPEC.isLoaded() && ALLOW_MAID_DAMAGE_MAID.get();
+    }
+
+    public static boolean allowPlayerDamageMaid() {
+        return SPEC.isLoaded() && ALLOW_PLAYER_DAMAGE_MAID.get();
+    }
+
+    public static boolean allowPlayerDamagePlayer() {
+        return SPEC.isLoaded() && ALLOW_PLAYER_DAMAGE_PLAYER.get();
     }
 }

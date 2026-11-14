@@ -62,11 +62,26 @@ player would.
   this sword.
 - While swinging she receives the same extra damage a player gets in Zenith mode, so the numbers match.
 - Deferred damage applies to her hits too, so the blades still arrive before the health bar moves.
-- Her swings never hurt players or other maids: the sword hits everything on a long line, so without this a
-  maid could cut her own owner in half while aiming at a zombie.
+- Her swings respect the friendly-fire rules below: by default they never hurt players or other maids,
+  because the sword hits everything on a long line and a maid could otherwise cut her own owner in half
+  while aiming at a zombie.
 
 The instant damage, the blade damage and the damage filter of the Zenith Sword itself are untouched:
 a maid simply calls the same attack entry point a player does.
+
+### Friendly fire
+
+Four independent options decide which directions the Zenith Sword may hurt:
+
+- **Maid → Player**: allowMaidDamagePlayer
+- **Maid → Maid**: allowMaidDamageMaid
+- **Player → Maid**: allowPlayerDamageMaid
+- **Player → Player**: allowPlayerDamagePlayer
+
+All four are off by default, so allies never damage each other. The check runs before both damage
+entry points, so it covers the instant pass, the flying blades and damage replayed by deferred
+damage. Turning one option on opens only that direction; the other three stay protected. Zenith
+Sword PvP needs Player → Player to be on.
 
 ### Cosmetic variants
 
@@ -110,6 +125,13 @@ config UI, no extra config library is required. The TOML file is still there for
     # Players closer than this keep only the vanilla sound (0 = also send to close players).
     hitSoundMinDistance = 16
 
+[friendly_fire]
+    # All four directions are off by default: allies never hurt each other.
+    allowMaidDamagePlayer = false
+    allowMaidDamageMaid = false
+    allowPlayerDamageMaid = false
+    allowPlayerDamagePlayer = false
+
 [maid]
     # Register the "Zenith Sword" maid work mode.
     enableZenithMaidTask = true
@@ -119,8 +141,6 @@ config UI, no extra config library is required. The TOML file is still there for
     zenithAttackCooldownTicks = 20
     # Extra damage while swinging, as a multiple of the sword's own damage value (1.0 = like a player).
     zenithDamageBonus = 1.0
-    # Keep players and other maids out of the maid's damage line (and out of her flying blades).
-    protectAllies = true
 ```
 
 ## Requirements
