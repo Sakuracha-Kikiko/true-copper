@@ -127,7 +127,7 @@ config UI, no extra config library is required. The TOML file is still there for
 
 - Minecraft 1.21.1
 - NeoForge 21.1.250 or newer
-- The Zenith Sword 2.0.1 or newer
+- The Zenith Sword 2.0.2 or newer
 
 Touhou Little Maid 1.5.3 or newer is optional: without it the maid work mode is simply not registered,
 everything else keeps working.
