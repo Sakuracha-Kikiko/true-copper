@@ -146,12 +146,19 @@ Touhou Little Maid 1.5.3 or newer is optional: without it the maid work mode is 
 ## Some Questions
 
 Q: This looks like it was written by AI?
+
 A: You guessed right - it was. The author's own Java knowledge is rather limited; Mixin in particular is something they simply cannot write. If you have a problem with vibe coding, feel free to ignore my mod.
+
 Q: Can I use it, or add it to a modpack?
+
 A: This mod is licensed under MIT. Whatever MIT allows you to do, you can do. That said, the author would be glad if you dropped them a line when making a modpack or the like.
+
 Q: Will there be other versions?
+
 A: The author's time is limited, so they may only be able to maintain 1.21.1. They might follow the NeoForge LTS version in the future (currently 26.1.2). Of course, if you want, you can port it yourself - that is what MIT allows you to do.
+
 Q: Why TheZenithSword and not one of the other Zenith Sword mods?
+
 A: Largely because of its author, actually. As far as the author can tell, OceanScenery is a pretty friendly person, and they have had some exchanges; TheZenithSword is also a very faithful Zenith Sword mod, and it is open-sourced under MIT as well. The author really likes this kind of atmosphere in the Minecraft open-source community.
 
 > I have to admit that TheZenith is a better mod: its art and implementation are better than all three other Zenith Swords. But unfortunately (or perhaps fortunately), it is an All Rights Reserved mod: its source is visible, but the author explicitly forbids others from making derivative works. That mod of his does not belong to the open-source community, and the law actually forbids me from doing so as well. Honestly, I don't have a problem with the DMCA - your copyright, your call - but since you did not choose the community, the community will not choose you either.
