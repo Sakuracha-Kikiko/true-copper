@@ -92,7 +92,20 @@ Two swords reuse the Zenith Sword's combat code without copying it:
 
 They deal the same damage, have the same reach, cooldown and enchantment behaviour, and take part
 in deferred damage exactly like the Zenith Sword. Only the item texture, the flying blade model and
-the trail colour differ. Both are in the Combat creative tab; there are no recipes yet.
+the trail colour differ. Both are in the Combat creative tab.
+
+### Shimmering transmutation
+
+The **Appearance → Enable Shimmering Transmutation** option (on by default) adds a single-item
+shapeless crafting cycle:
+
+- Zenith Sword → True Copper Shortsword
+- True Copper Shortsword → True Wooden Sword
+- True Wooden Sword → Zenith Sword
+
+The result keeps every data component of the input, so enchantments, custom names, lore and damage
+carry across all three forms. The option only controls recipe matching and can be changed at runtime;
+because crafting runs on the server, the server's config is authoritative.
 
 ## Configuration
 
@@ -124,6 +137,10 @@ config UI, no extra config library is required. The TOML file is still there for
     hitSoundVolume = 0.8
     # Players closer than this keep only the vanilla sound (0 = also send to close players).
     hitSoundMinDistance = 16
+
+[appearance]
+    # Single-item shapeless cycle: Zenith -> Copper -> Wooden -> Zenith, keeping data components.
+    enableShimmeringTransmutation = true
 
 [friendly_fire]
     # All four directions are off by default: allies never hurt each other.

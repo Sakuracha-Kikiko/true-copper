@@ -9,6 +9,9 @@
   "true_copper.configuration.section.true.copper.common.toml.title": "True Copper",
   "true_copper.config.deferred_damage": "Deferred Damage",
   "true_copper.config.sounds": "Sounds",
+  "true_copper.config.appearance": "Appearance",
+  "true_copper.config.appearance.enableShimmeringTransmutation": "Enable Shimmering Transmutation",
+  "true_copper.config.appearance.enableShimmeringTransmutation.tooltip": "Cycle one sword through its three forms in a crafting grid:\nZenith Sword -> True Copper Shortsword -> True Wooden Sword -> Zenith Sword.\nThe result keeps enchantments, custom names and every other data component.",
   "true_copper.config.friendly_fire": "Friendly Fire",
   "true_copper.config.friendly_fire.allowMaidDamagePlayer": "Allow Maid → Player",
   "true_copper.config.friendly_fire.allowMaidDamageMaid": "Allow Maid → Maid",
@@ -31,6 +34,9 @@
   "true_copper.config.maid.zenithDamageBonus": "Damage Bonus",
   "true_copper.config.deferred_damage.button": "Edit",
   "true_copper.config.sounds.button": "Edit",
+  "true_copper.config.appearance.button": "Edit",
   "true_copper.config.friendly_fire.button": "Edit",
-  "true_copper.config.maid.button": "Edit"
+  "true_copper.config.maid.button": "Edit",
+  "true_copper.config.sounds.tooltip": "Swing and hit sounds for the Zenith Sword.",
+  "true_copper.config.appearance.tooltip": "Transmutation between the Zenith Sword and its two cosmetic variants."
 }

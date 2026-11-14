@@ -9,6 +9,9 @@
   "true_copper.configuration.section.true.copper.common.toml.title": "True Copper 通用配置",
   "true_copper.config.deferred_damage": "延迟伤害",
   "true_copper.config.sounds": "音效",
+  "true_copper.config.appearance": "外观",
+  "true_copper.config.appearance.enableShimmeringTransmutation": "启用微光嬗变形态",
+  "true_copper.config.appearance.enableShimmeringTransmutation.tooltip": "开启后，单独一把剑可以在合成格中按顺序转化：\n天顶剑 → 真铜短剑 → 真木剑 → 天顶剑。\n转化会保留附魔、名称、耐久等全部数据组件。",
   "true_copper.config.friendly_fire": "友伤规则",
   "true_copper.config.friendly_fire.allowMaidDamagePlayer": "女仆误伤玩家",
   "true_copper.config.friendly_fire.allowMaidDamageMaid": "女仆误伤女仆",
@@ -49,10 +52,12 @@
   "true_copper.config.friendly_fire.allowPlayerDamagePlayer.tooltip": "开启后，玩家之间可以用天顶剑互相伤害（PvP）。",
   "true_copper.config.deferred_damage.button": "编辑",
   "true_copper.config.sounds.button": "编辑",
+  "true_copper.config.appearance.button": "编辑",
   "true_copper.config.friendly_fire.button": "编辑",
   "true_copper.config.maid.button": "编辑",
   "true_copper.config.deferred_damage.tooltip": "天顶剑挥砍的瞬时伤害延迟到剑气命中时结算。",
   "true_copper.config.sounds.tooltip": "天顶剑的挥砍与命中音效。",
+  "true_copper.config.appearance.tooltip": "天顶剑与两种外观变体之间的转化。",
   "true_copper.config.friendly_fire.tooltip": "四种友伤方向。默认全部关闭，天顶剑不会伤害任何盟友。",
   "true_copper.config.maid.tooltip": "让女仆像玩家一样使用天顶剑。"
 }

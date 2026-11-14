@@ -31,6 +31,7 @@ public final class TrueCopperConfig {
     private static final ModConfigSpec.BooleanValue ALLOW_MAID_DAMAGE_MAID;
     private static final ModConfigSpec.BooleanValue ALLOW_PLAYER_DAMAGE_MAID;
     private static final ModConfigSpec.BooleanValue ALLOW_PLAYER_DAMAGE_PLAYER;
+    private static final ModConfigSpec.BooleanValue ENABLE_SHIMMERING_TRANSMUTATION;
 
     private static final boolean DEFAULT_DEFER = true;
     private static final int DEFAULT_WINDOW = 10;
@@ -50,6 +51,7 @@ public final class TrueCopperConfig {
     private static final boolean DEFAULT_ALLOW_MAID_DAMAGE_MAID = false;
     private static final boolean DEFAULT_ALLOW_PLAYER_DAMAGE_MAID = false;
     private static final boolean DEFAULT_ALLOW_PLAYER_DAMAGE_PLAYER = false;
+    private static final boolean DEFAULT_ENABLE_SHIMMERING_TRANSMUTATION = true;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -123,6 +125,19 @@ public final class TrueCopperConfig {
                 .comment("Players closer than this (in blocks) to the target keep the vanilla hurt sound only.",
                         "Set to 0 to also send the extended sound to close players (it will sound doubled).")
                 .defineInRange("hitSoundMinDistance", DEFAULT_HIT_SOUND_MIN_DISTANCE, 0, 128);
+
+        builder.pop();
+
+        builder.translation(LANG + "appearance")
+                .comment("How the three sword forms can be transformed into each other.")
+                .push("appearance");
+
+        ENABLE_SHIMMERING_TRANSMUTATION = builder
+                .translation(LANG + "appearance.enableShimmeringTransmutation")
+                .comment("Allow one Zenith Sword, True Copper Shortsword or True Wooden Sword to be transmuted",
+                        "in a crafting grid, cycling Zenith -> Copper -> Wooden -> Zenith.",
+                        "The result keeps every data component of the input, including enchantments and custom names.")
+                .define("enableShimmeringTransmutation", DEFAULT_ENABLE_SHIMMERING_TRANSMUTATION);
 
         builder.pop();
 
@@ -214,6 +229,10 @@ public final class TrueCopperConfig {
 
     public static boolean playZenithHitSound() {
         return !SPEC.isLoaded() || PLAY_ZENITH_HIT_SOUND.get();
+    }
+
+    public static boolean enableShimmeringTransmutation() {
+        return !SPEC.isLoaded() || ENABLE_SHIMMERING_TRANSMUTATION.get();
     }
 
     public static float zenithHitSoundRange() {
