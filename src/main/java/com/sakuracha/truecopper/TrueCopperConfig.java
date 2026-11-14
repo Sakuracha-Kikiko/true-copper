@@ -38,14 +38,14 @@ public final class TrueCopperConfig {
     private static final int DEFAULT_TIMEOUT = 25;
     private static final boolean DEFAULT_PLAY_SOUND = true;
     private static final double DEFAULT_SOUND_VOLUME = 1.0D;
-    private static final int DEFAULT_SWING_SOUND_RANGE = 200;
+    private static final int DEFAULT_SWING_SOUND_RANGE = 64;
     private static final boolean DEFAULT_PLAY_HIT_SOUND = true;
-    private static final int DEFAULT_HIT_SOUND_RANGE = 200;
+    private static final int DEFAULT_HIT_SOUND_RANGE = 64;
     private static final double DEFAULT_HIT_SOUND_VOLUME = 0.8D;
     private static final int DEFAULT_HIT_SOUND_MIN_DISTANCE = 16;
     private static final boolean DEFAULT_ENABLE_MAID_TASK = true;
-    private static final int DEFAULT_MAID_SEARCH_RANGE = 32;
-    private static final int DEFAULT_MAID_COOLDOWN = 20;
+    private static final int DEFAULT_MAID_SEARCH_RANGE = 64;
+    private static final int DEFAULT_MAID_COOLDOWN = 8;
     private static final double DEFAULT_MAID_DAMAGE_BONUS = 1.0D;
     private static final boolean DEFAULT_ALLOW_MAID_DAMAGE_PLAYER = false;
     private static final boolean DEFAULT_ALLOW_MAID_DAMAGE_MAID = false;
@@ -99,7 +99,7 @@ public final class TrueCopperConfig {
                 .translation(LANG + "sounds.swingSoundRange")
                 .comment("How far (in blocks) other players can hear a Zenith Sword swing.",
                         "The attacker always hears the swing at full volume; everyone else hears it fade with distance.",
-                        "The sword itself reaches 200 blocks, so the default matches that.")
+                        "The sword itself reaches 200 blocks, but sound travels so far sounds loud, so the default is 64.")
                 .defineInRange("swingSoundRange", DEFAULT_SWING_SOUND_RANGE, 16, 512);
 
         PLAY_ZENITH_HIT_SOUND = builder
