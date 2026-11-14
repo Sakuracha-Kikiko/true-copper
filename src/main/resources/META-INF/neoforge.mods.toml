@@ -7,14 +7,8 @@ issueTrackerURL = "https://github.com/Sakuracha-Kikiko/True-Copper/issues"
 modId = "${mod_id}"
 version = "${mod_version}"
 displayName = "${mod_name}"
-authors = "樱茶琪琪子"
-description = '''Adds features and compatibilities for The Zenith Sword.
-
-Currently:
-- The instantaneous damage of a swing is held back until a flying Zenith blade actually reaches the target, so damage and visuals line up.
-- Swing and hit sounds that carry across the sword's full reach.
-- A Zenith Sword work mode for Touhou Little Maid.
-- Two cosmetic variants: the True Copper Shortsword and the True Wooden Sword.'''
+authors = "${mod_authors}"
+description = "${mod_description}"
 
 [[mixins]]
 config = "true_copper.mixins.json"
