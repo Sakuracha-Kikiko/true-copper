@@ -8,12 +8,14 @@ import com.sakuracha.truecopper.damage.DeferredDamage;
 import com.sakuracha.truecopper.sound.SoundBroadcast;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
@@ -57,6 +59,30 @@ public class DamageHandlerMixin {
     }
 
     /**
+     * The result of the one {@code victim.hurt} call inside {@code applyDamageAmount}. That method
+     * returns true even when the hurt call was rejected (most importantly after the victim already
+     * died), so without this flag every extra blade that lands on a corpse would replay the death
+     * sound.
+     */
+    private static final ThreadLocal<Boolean> TRUECOPPER$HURT = ThreadLocal.withInitial(() -> Boolean.FALSE);
+
+    @Inject(method = APPLY_DAMAGE_AMOUNT, at = @At("HEAD"), remap = false)
+    private static void truecopper$resetHurtFlag(Entity victim, ZenithDamageSource source, float damage,
+                                                 ItemStack weapon, float scale, CallbackInfoReturnable<Boolean> callback) {
+        TRUECOPPER$HURT.set(Boolean.FALSE);
+    }
+
+    @Redirect(method = APPLY_DAMAGE_AMOUNT,
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),
+            remap = false)
+    private static boolean truecopper$recordHurt(Entity victim, DamageSource source, float amount) {
+        boolean hurt = victim.hurt(source, amount);
+        TRUECOPPER$HURT.set(hurt);
+        return hurt;
+    }
+
+    /**
      * Replays the victim's own hurt (or death) sound to players far outside the vanilla 16 block
      * radius. Players that close already get the normal sound, so they are skipped.
      */
@@ -64,7 +90,9 @@ public class DamageHandlerMixin {
     private static void truecopper$extendHitSound(Entity victim, ZenithDamageSource source, float damage,
                                                   ItemStack weapon, float scale,
                                                   CallbackInfoReturnable<Boolean> callback) {
-        if (!callback.getReturnValue() || !TrueCopperConfig.playZenithHitSound()) {
+        boolean hurt = Boolean.TRUE.equals(TRUECOPPER$HURT.get());
+        TRUECOPPER$HURT.remove();
+        if (!callback.getReturnValue() || !hurt || !TrueCopperConfig.playZenithHitSound()) {
             return;
         }
         if (!(victim instanceof LivingEntity living) || !(living.level() instanceof ServerLevel level)) {
