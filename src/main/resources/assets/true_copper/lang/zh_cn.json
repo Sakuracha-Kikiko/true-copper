@@ -1,6 +1,7 @@
 {
   "item.true_copper.true_copper_shortsword": "真铜短剑",
   "item.true_copper.true_wooden_sword": "真木剑",
+  "itemGroup.true_copper": "真铜",
   "subtitles.true_copper.zenith_slash": "天顶剑挥砍",
   "task.true_copper.zenith_attack": "天顶剑",
   "task.true_copper.zenith_attack.desc": "女仆会获得旅程巅峰时刻的力量",

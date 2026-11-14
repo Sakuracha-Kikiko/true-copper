@@ -1,6 +1,7 @@
 package com.sakuracha.truecopper;
 
 import com.sakuracha.truecopper.client.ClientSetup;
+import com.sakuracha.truecopper.item.TrueCopperCreativeTab;
 import com.sakuracha.truecopper.item.TrueCopperItems;
 import com.sakuracha.truecopper.network.TrueCopperNetwork;
 import com.sakuracha.truecopper.recipe.TrueCopperRecipes;
@@ -23,6 +24,7 @@ public final class TrueCopper {
     public TrueCopper(ModContainer container, IEventBus modEventBus) {
         ModSounds.SOUNDS.register(modEventBus);
         TrueCopperItems.register(modEventBus);
+        TrueCopperCreativeTab.register(modEventBus);
         TrueCopperRecipes.register(modEventBus);
         TrueCopperNetwork.register(modEventBus);
         container.registerConfig(ModConfig.Type.COMMON, TrueCopperConfig.SPEC);

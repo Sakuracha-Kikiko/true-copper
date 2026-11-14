@@ -7,11 +7,9 @@ import com.oceanscenery.zenith.mod_class.item.ZenithItem;
 import com.oceanscenery.zenith.registry.ZenithDataComponents;
 import com.sakuracha.truecopper.TrueCopper;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -34,7 +32,6 @@ public final class TrueCopperItems {
 
     public static void register(IEventBus modEventBus) {
         ITEMS.register(modEventBus);
-        modEventBus.addListener(TrueCopperItems::addCreative);
     }
 
     private static Item.Properties swordProperties(Item.Properties properties) {
@@ -49,10 +46,4 @@ public final class TrueCopperItems {
                 .component(ZenithDataComponents.ATTACK_MODE.get(), AttackMode.LIVING_ENTITY);
     }
 
-    private static void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
-            event.accept(TRUE_COPPER_SHORTSWORD.get());
-            event.accept(TRUE_WOODEN_SWORD.get());
-        }
-    }
 }

@@ -92,7 +92,7 @@ Two swords reuse the Zenith Sword's combat code without copying it:
 
 They deal the same damage, have the same reach, cooldown and enchantment behaviour, and take part
 in deferred damage exactly like the Zenith Sword. Only the item texture, the flying blade model and
-the trail colour differ. Both are in the Combat creative tab.
+the trail colour differ. Both are in their own **True Copper** creative tab (`itemGroup.true_copper`).
 
 ### Shimmering transmutation
 
