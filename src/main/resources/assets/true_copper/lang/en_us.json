@@ -3,7 +3,7 @@
   "item.true_copper.true_wooden_sword": "True Wooden Sword",
   "subtitles.true_copper.zenith_slash": "Zenith Sword swings",
   "task.true_copper.zenith_attack": "Zenith Sword",
-  "task.true_copper.zenith_attack.desc": "Swing the Zenith Sword: every enemy in a straight line is cut, then the blades finish the job.",
+  "task.true_copper.zenith_attack.desc": "Maid will get the power of the culmination of a journey.",
   "task.true_copper.zenith_attack.condition.has_zenith": "Mainhand holds a Zenith Sword",
   "true_copper.configuration.title": "True Copper Settings",
   "true_copper.configuration.section.true.copper.common.toml.title": "True Copper",

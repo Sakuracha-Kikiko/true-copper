@@ -3,7 +3,7 @@
   "item.true_copper.true_wooden_sword": "真木剑",
   "subtitles.true_copper.zenith_slash": "天顶剑挥砍",
   "task.true_copper.zenith_attack": "天顶剑",
-  "task.true_copper.zenith_attack.desc": "女仆会获得旅程巅峰的力量",
+  "task.true_copper.zenith_attack.desc": "女仆会获得旅程巅峰时刻的力量",
   "task.true_copper.zenith_attack.condition.has_zenith": "主手持有天顶剑",
   "true_copper.configuration.title": "True Copper 设置",
   "true_copper.configuration.section.true.copper.common.toml.title": "True Copper 通用配置",
