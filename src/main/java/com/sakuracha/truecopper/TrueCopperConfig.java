@@ -27,6 +27,7 @@ public final class TrueCopperConfig {
     private static final ModConfigSpec.IntValue MAID_SEARCH_RANGE;
     private static final ModConfigSpec.IntValue MAID_COOLDOWN_TICKS;
     private static final ModConfigSpec.DoubleValue MAID_DAMAGE_BONUS;
+    private static final ModConfigSpec.BooleanValue USE_VANILLA_RANGED_ATTACK;
     private static final ModConfigSpec.BooleanValue ALLOW_MAID_DAMAGE_PLAYER;
     private static final ModConfigSpec.BooleanValue ALLOW_MAID_DAMAGE_MAID;
     private static final ModConfigSpec.BooleanValue ALLOW_PLAYER_DAMAGE_MAID;
@@ -47,6 +48,7 @@ public final class TrueCopperConfig {
     private static final int DEFAULT_MAID_SEARCH_RANGE = 64;
     private static final int DEFAULT_MAID_COOLDOWN = 8;
     private static final double DEFAULT_MAID_DAMAGE_BONUS = 1.0D;
+    private static final boolean DEFAULT_USE_VANILLA_RANGED_ATTACK = false;
     private static final boolean DEFAULT_ALLOW_MAID_DAMAGE_PLAYER = false;
     private static final boolean DEFAULT_ALLOW_MAID_DAMAGE_MAID = false;
     private static final boolean DEFAULT_ALLOW_PLAYER_DAMAGE_MAID = false;
@@ -196,6 +198,13 @@ public final class TrueCopperConfig {
                         "A player in Zenith mode gets one extra copy of it, so 1.0 matches a player; 0 disables it.")
                 .defineInRange("zenithDamageBonus", DEFAULT_MAID_DAMAGE_BONUS, 0.0D, 10.0D);
 
+        USE_VANILLA_RANGED_ATTACK = builder
+                .translation(LANG + "maid.useVanillaRangedAttack")
+                .comment("Also use the vanilla ranged-attack movement while swinging: keep a distance, strafe sideways",
+                        "and back off when the target gets too close. Off by default: the maid only walks toward the",
+                        "target and swings.")
+                .define("useVanillaRangedAttack", DEFAULT_USE_VANILLA_RANGED_ATTACK);
+
         builder.pop();
         SPEC = builder.build();
     }
@@ -261,6 +270,10 @@ public final class TrueCopperConfig {
 
     public static double maidDamageBonus() {
         return SPEC.isLoaded() ? MAID_DAMAGE_BONUS.get() : DEFAULT_MAID_DAMAGE_BONUS;
+    }
+
+    public static boolean useVanillaRangedAttack() {
+        return SPEC.isLoaded() && USE_VANILLA_RANGED_ATTACK.get();
     }
 
     public static boolean allowMaidDamagePlayer() {

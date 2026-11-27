@@ -46,6 +46,7 @@ Adds a **Zenith Sword** work mode for Touhou Little Maid: a maid holding a Zenit
 - While swinging she receives the same extra damage a player gets in Zenith mode, so the numbers match.
 - Deferred damage applies to her hits too (when enabled), so the blades still arrive before the health bar moves.
 - Her swings respect the friendly-fire rules below: by default they never hurt players or other maids, because the sword hits everything on a long line and a maid could otherwise cut her own owner in half while aiming at a zombie.
+- **Use Vanilla Ranged Attack Logic** (off by default) adds the movement half of the vanilla ranged AI on top of the swing: she keeps her distance, strafes sideways and backs off when the target gets too close. The attack itself is unchanged, and the option can be toggled at runtime.
 
 The option is on by default, and changing it requires a game restart. The instant damage, the blade damage and the damage filter of the Zenith Sword itself are untouched: a maid simply calls the same attack entry point a player does.
 
@@ -131,13 +132,15 @@ Everything below can be edited in game: **Mods → True Copper → Config**. The
     zenithAttackCooldownTicks = 8
     # Extra damage while swinging, as a multiple of the sword's own damage value (1.0 = like a player).
     zenithDamageBonus = 1.0
+    # Also use the vanilla ranged movement: keep distance, strafe and back off. Off by default.
+    useVanillaRangedAttack = false
 ```
 
 ## Requirements
 
 - Minecraft 1.21.1
 - NeoForge 21.1.250 or newer
-- TheZenithSword 2.0.2 or newer
+- TheZenithSword 2.0.3 or newer
 
 Touhou Little Maid 1.5.3 or newer is optional: without it the maid work mode is simply not registered, everything else keeps working.
 

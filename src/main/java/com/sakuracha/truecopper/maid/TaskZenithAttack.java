@@ -66,12 +66,16 @@ public class TaskZenithAttack implements IRangedAttackTask {
         BehaviorControl<EntityMaid> startAttacking = new MaidStartAttackingTask(this);
         BehaviorControl<EntityMaid> stopAttacking = StopAttackingIfTargetInvalid.create(target -> !hasZenith(maid) || farAway(target, maid));
         BehaviorControl<EntityMaid> walkToTarget = MaidRangedWalkToTarget.create(0.6f);
+        // The movement half of the vanilla ranged AI. The task checks the config itself, so the option can be
+        // toggled without rebuilding the maid's brain; with the option off it never starts.
+        BehaviorControl<EntityMaid> strafe = new MaidZenithStrafingTask();
         BehaviorControl<EntityMaid> attack = new MaidZenithAttackTask(this);
 
         return Lists.newArrayList(
                 Pair.of(5, startAttacking),
                 Pair.of(5, stopAttacking),
                 Pair.of(5, walkToTarget),
+                Pair.of(5, strafe),
                 Pair.of(5, attack)
         );
     }

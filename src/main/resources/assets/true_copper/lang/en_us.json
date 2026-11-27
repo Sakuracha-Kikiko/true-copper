@@ -33,6 +33,8 @@
   "true_copper.config.maid.zenithSearchRange": "Search Range",
   "true_copper.config.maid.zenithAttackCooldownTicks": "Swing Cooldown (ticks)",
   "true_copper.config.maid.zenithDamageBonus": "Damage Bonus",
+  "true_copper.config.maid.useVanillaRangedAttack": "Use Vanilla Ranged Attack Logic",
+  "true_copper.config.maid.useVanillaRangedAttack.tooltip": "Also use the vanilla ranged-attack movement while swinging: keep a distance, strafe sideways, and back off when the target gets too close. Off by default.",
   "true_copper.config.deferred_damage.button": "Edit",
   "true_copper.config.sounds.button": "Edit",
   "true_copper.config.appearance.button": "Edit",
